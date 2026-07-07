@@ -49,7 +49,7 @@ export interface Project {
 export interface ProjectQuestion {
   id: number;
   text: string;
-  answer_type: 'TEXT' | 'TEXTAREA' | 'SELECT' | 'MULTISELECT' | 'BOOLEAN';
+  answer_type: "TEXT" | "LONG_TEXT" | "BOOLEAN" | "CHOICE";
   choices?: string[];
   is_required: boolean;
   order: number;

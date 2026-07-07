@@ -2,7 +2,7 @@ import type { Application, LeaderboardEntry, Notification, Paginated, Project, R
 import { mockApplications, mockLeaderboard, mockNotifications, mockProjects, mockRewards, mockUser } from '../data/mock';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api/v1';
-export const MOCK_MODE = (import.meta.env.VITE_MOCK_MODE ?? 'true') !== 'false';
+export const MOCK_MODE = import.meta.env.VITE_MOCK_MODE === "true";
 
 const sleep = (ms = 280) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -158,6 +158,13 @@ export const api = {
     async list(): Promise<Paginated<Notification>> {
       if (MOCK_MODE) { await sleep(); return paginate(mockNotifications); }
       return request('/notifications/');
+    },
+    async markRead(id: number): Promise<Notification> {
+      return request(`/notifications/${id}/read/`, { method: 'POST' });
+    },
+
+    async markAllRead(): Promise<{ updated: number }> {
+      return request('/notifications/read-all/', { method: 'POST' });
     }
   }
 };
